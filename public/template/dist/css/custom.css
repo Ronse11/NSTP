@@ -1,0 +1,16 @@
+/* For WebKit-based browsers (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+    width: 6px; /* Thin scrollbar */
+  }
+  
+  /* For WebKit-based browsers (Chrome, Safari, etc.) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #6d6d6d; /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners */
+  }
+  
+  /* For Firefox */
+  html {
+    scrollbar-width: thin; /* Thin scrollbar for Firefox */
+  }
+  
