@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CPSU | NSTP</title>
+    <title>CPSU | NSTPs</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/ph-locations@latest/dist/ph-locations.min.js"></script>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -18,8 +20,21 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
+    {{-- Date --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <link rel="icon" href="{{ asset('template/dist/img/cpsulogo.png') }}" type="image/png">
 
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+
+
+    <style>
+        .second-row {
+            min-height: 300px; /* Adjust as needed */
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini text-sm">
     <div class="wrapper">
@@ -50,20 +65,30 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            @auth('admin')
+            {{-- @auth('admin')
                 @if(Auth::guard('admin')->user()->role === 'Administrator')
                     <a href="{{ route('dash')}}" class="brand-link">
                         <img src="{{ asset('template/dist/img/cpsulogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                         <span class="brand-text font-weight-light">CPSU NSTP Admin</span>
                     </a>
+                @else
+                    <a href="{{ route('fillupstudentCategoryRead') }}" class="brand-link">
+                        <img src="{{ asset('template/dist/img/cpsulogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">CPSU NSTP</span>
+                    </a>
                 @endif
-            @endauth
+            @endauth --}}
 
             @auth('web')
                 @if(Auth::guard('web')->user()->role === 'Student')
                     <a href="{{ route('fillupstudentCategoryRead') }}" class="brand-link">
                         <img src="{{ asset('template/dist/img/cpsulogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                         <span class="brand-text font-weight-light">CPSU NSTP</span>
+                    </a>
+                @else
+                    <a href="{{ route('dash')}}" class="brand-link">
+                        <img src="{{ asset('template/dist/img/cpsulogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">CPSU NSTP Admin</span>
                     </a>
                 @endif
             @endauth
@@ -77,15 +102,19 @@
                     <div class="info">
                     <a href="#" class="d-block">
 
-                        @auth('admin')
+                        {{-- @auth('admin')
                             @if(Auth::guard('admin')->user()->role == 'Administrator')
                                 {{ Auth::guard('admin')->user()->fname }} {{ Auth::guard('admin')->user()->lname }}
+                            @else
+                                {{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}
                             @endif
-                        @endauth
+                        @endauth --}}
 
                         @auth('web')
-                            @if(Auth::guard('web')->user()->role == 'Student')
-                                {{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}
+                            @if(Auth::guard('web')->user()->role === 'Student')
+                                {{ auth()->user()->fname }} {{ auth()->user()->lname }}
+                            @else
+                                {{ auth()->user()->fname }} {{ auth()->user()->lname }}
                             @endif
                         @endauth
                         
@@ -136,6 +165,21 @@
 <script src="{{ asset('template/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('template/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+{{-- JS Address --}}
+<script src="{{ asset('assets/js/address.js') }}"></script>
+
+{{-- Date --}}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    flatpickr("#birthday", {
+        dateFormat: "d-m-Y",
+        onChange: function(selectedDates, dateStr, instance) {
+            document.getElementById("birthday-hidden").value = dateStr;
+        }
+    });
+</script>
+
 <script>
     $(function () {
         $("#example1").DataTable({
@@ -155,5 +199,198 @@
         });
     });
   </script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> --}}
+
+<script>
+function printTable() {
+
+    const elementsToHide = document.querySelectorAll('.no-print');
+    const originalStyles = new Map();
+    elementsToHide.forEach(el => {
+        originalStyles.set(el, el.style.display);
+        el.style.display = 'none';
+    });
+
+    const table = document.querySelector(".printTableArea"); 
+    const category = table.getAttribute('data-category'); 
+    if (!table) {
+        alert("No table found!");
+        restoreOriginalState();
+        return;
+    }
+
+    const tableRows = table.querySelectorAll("tbody tr");
+    let filteredRows = [];
+    
+    tableRows.forEach(row => {
+        const checkbox = row.querySelector('.print-checkbox');
+        if (checkbox && checkbox.checked) {
+            let clonedRow = row.cloneNode(true);
+            let checkboxCell = clonedRow.querySelector('.no-print');
+            if (checkboxCell) checkboxCell.remove();
+            console.log(checkboxCell);
+
+            filteredRows.push(clonedRow.outerHTML);
+        }
+    });
+
+    if (filteredRows.length === 0) {
+        alert("No records selected for printing!");
+        restoreOriginalState();
+        return;
+    }
+
+    const customThead = `
+        <thead>
+            <tr>
+                <th style="text-align: left;">#</th>
+                <th style="text-align: left;">Name</th>
+                <th style="text-align: left;">Course</th>
+                <th style="text-align: left;">Gender</th>
+            </tr>
+        </thead>
+    `;
+
+    let paginatedRows = '';
+    filteredRows.forEach((row, index) => {
+        if (index % 23 === 0 && index !== 0) {
+            paginatedRows += `<tr class="page-break" style="height: 170px;"></tr>`;
+        }
+        paginatedRows += row;
+    });
+
+
+    const printContent = `
+    <style>
+        /* Ensure the header and footer remain in place */
+        .header, .footer {
+            position: fixed;
+            width: 100%;
+            text-align: center;
+            background: white;
+        }
+        .header {
+            top: 0;
+        }
+
+        .footer {
+            bottom: 0;
+        }
+
+        .content {
+            margin-top: 200px;
+        }
+
+        /* Ensure content starts correctly on each new page */
+        @media print {
+            .content {
+                page-break-before: always;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+
+    <div class="header">
+        <img src="{{ asset('assets/img/printFormat/header.png') }}" style="width: 100%;" />
+        <h2 style="font-family: Arial, Helvetica, sans-serif;">${category}</h2>
+    </div>
+
+    <div class="footer">
+        <img src="{{ asset('assets/img/printFormat/footer.png') }}" style="width: 100%;" />
+    </div>
+
+    <div class="content">
+        <table cellspacing="0" cellpadding="5" width="100%">
+            ${customThead}
+            <tbody>${paginatedRows}</tbody>
+        </table>
+    </div>
+    `;
+
+    printJS({
+        printable: printContent,
+        type: 'raw-html',
+        documentTitle: 'Student List',
+    });
+
+    setTimeout(() => {
+        restoreOriginalState();
+    }, 500);
+
+    function restoreOriginalState() {
+        elementsToHide.forEach(el => {
+            el.style.display = originalStyles.get(el) || '';
+        });
+    }
+}
+
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkAllBtn = document.getElementById("checkAllBtn");
+        const checkboxes = document.querySelectorAll(".print-checkbox");
+
+        checkAllBtn.addEventListener("click", function () {
+            let allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+            checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+        });
+
+        // Master checkbox in table header
+        const masterCheckbox = document.getElementById("checkAll");
+
+        masterCheckbox.addEventListener("change", function () {
+            checkboxes.forEach(checkbox => checkbox.checked = masterCheckbox.checked);
+        });
+
+
+
+        // Adding comment
+        document.getElementById("declineForm").addEventListener("submit", function (event) {
+            const comment = document.getElementById("declineComment").value.trim();
+            
+            if (!comment) {
+                event.preventDefault();
+                alert("Please enter a reason before declining.");
+            }
+        });
+    });
+</script>
+
+{{-- Exporting to Excel --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("exportCheckedBtn").addEventListener("click", function() {
+            let selectedStudents = [];
+            let category = document.getElementById("example1").dataset.categ;
+    
+            document.querySelectorAll(".print-checkbox:checked").forEach((checkbox) => {
+                let studentId = checkbox.closest("tr").dataset.studentId;
+                if (studentId) {
+                    selectedStudents.push(studentId);
+                }
+            });
+    
+            if (selectedStudents.length === 0) {
+                alert("Please select at least one student to export.");
+                return;
+            }
+            
+            let exportUrl = "{{ route('export.all.students') }}";
+            window.location.href = `${exportUrl}?key=${category}&selectedStudents=${selectedStudents.join(",")}`;
+        });
+    });
+</script>
+
+
+    
+
 </body>
 </html>

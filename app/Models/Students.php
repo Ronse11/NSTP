@@ -24,6 +24,7 @@ class Students extends Authenticatable
         'fname',
         'mname',
         'ext',
+        'birthday',
         'gender',
         'brgy',
         'city',

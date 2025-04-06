@@ -48,21 +48,21 @@
 
                                 <div class="form-group">
                                     <div class="form-row">
-                                        <div class="col-md-3">
+                                        {{-- <div class="col-md-3">
                                             <label for="serial_number">NSTP Serial Number:</label>
                                             <input type="text" name="serial_number" class="form-control" placeholder="Auto Generated" disabled>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-3">
                                             <label for="school_year">School Year:</label>
-                                            <input type="text" name="school_year" class="form-control" placeholder="Example 2024-2025">
+                                            <input type="text" name="school_year" class="form-control" placeholder="Example 2024-2025" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="school_id">School ID No.:</label>
-                                            <input type="text" name="school_id" class="form-control" placeholder="Enter School ID Number">
+                                            <input type="text" name="school_id" class="form-control" placeholder="Enter School ID Number" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="fname">Course</label>
-                                            <select class="form-control" name="course">
+                                            <select class="form-control" name="course" required>
                                                 <option disabled selected> --Select-- </option>
                                                 <option value="Bachelor Of Science In Information Technology">Bachelor Of Science In Information Technology</option>
                                                 <option value="Bachelor Of Science In Agribusiness">Bachelor Of Science In Agribusiness</option>
@@ -76,6 +76,10 @@
                                                 <option value="Bachelor Of Science In Forestry">Bachelor Of Science In Forestry</option>
                                             </select>
                                         </div>
+                                        <div class="col-md-3">
+                                            <label for="contact_no">Telephone No/Cp No:</label>
+                                            <input type="text" name="contact_no" class="form-control" placeholder="01234567890" required>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -83,19 +87,19 @@
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <label for="lname">Last Name:</label>
-                                            <input type="text" name="lname" class="form-control" placeholder="Enter Last name">
+                                            <input type="text" name="lname" class="form-control" placeholder="Enter Last name" oninput="this.value = this.value.toUpperCase()" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="fname">First Name:</label>
-                                            <input type="text" name="fname" class="form-control" placeholder="Enter First name">
+                                            <input type="text" name="fname" class="form-control" placeholder="Enter First name" oninput="this.value = this.value.toUpperCase()" required>
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="mname">Middle Name:</label>
-                                            <input type="text" name="mname" class="form-control" placeholder="Enter Middle name">
+                                            <label for="mname">Middle Initial:</label>
+                                            <input type="text" name="mname" class="form-control" placeholder="Enter Middle Initial" oninput="this.value = this.value.toUpperCase()" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ext">Extension Name:</label>
-                                            <input type="text" name="ext" class="form-control" placeholder="Enter Extension name">
+                                            <input type="text" name="ext" class="form-control" placeholder="Enter Extension name" oninput="this.value = this.value.toUpperCase()">
                                         </div>
                                     </div>
                                 </div>
@@ -103,67 +107,90 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-md-3">
+                                            <label for="birthday">Birthdate:</label>
+                                            <input type="text" id="birthday" class="form-control" placeholder="Select your birthdate">   
+                                            <input type="hidden" name="birthday" id="birthday-hidden">                                    
+                                        </div>
+                                        <div class="col-md-3">
                                             <label for="gender">Gender:</label> 
-                                            <select class="form-control" name="gender">
+                                            <select class="form-control" name="gender" required>
                                                 <option disabled selected> --Select-- </option>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="brgy">Street/Brgy:</label>
-                                            <input type="text" name="brgy" class="form-control" placeholder="Enter Street/Brgy ">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="city">City/Municipality:</label>
-                                            <input type="text" name="city" class="form-control" placeholder="Enter City/Municipality ">
-                                        </div>
+                                        
+                                        <input type="hidden" name="province" id="province_name" required>
+                                        <input type="hidden" name="city" id="city_name" required>
                                         <div class="col-md-3">
                                             <label for="province">Province:</label>
-                                            <input type="text" name="province" class="form-control" placeholder="Enter Province ">
+                                            <select id="province" class="form-control">
+                                                <option value="" selected disabled>Select Province</option>
+                                            </select>
                                         </div>
+                                        
+                                        <div class="col-md-3">
+                                            <label for="city">City/Municipality:</label>
+                                            <select id="city" class="form-control" disabled>
+                                                <option value="" selected disabled>Select City/Municipality</option>
+                                            </select>
+                                        </div>
+                                        
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
                                     <div class="form-row">
+                                        <input type="hidden" name="brgy" id="barangay_name" required>
+                                        <div class="col-md-3">
+                                            <label for="brgy">Street/Brgy:</label>
+                                            <select id="barangay" class="form-control" disabled>
+                                                <option value="" selected disabled>Select Barangay</option>
+                                            </select>
+                                        </div>
                                         <div class="col-md-3">
                                             <label for="hei_name">Hei Name:</label> 
-                                            <select class="form-control" name="hei_name">
+                                            <select class="form-control" name="hei_name" required>
                                                 <option disabled selected> --Select-- </option>
-                                                <option value="Male">Central Philippines State University</option>
+                                                <option value="Central Philippines State University">Central Philippines State University</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="institutional_code">Institution Code:</label>
-                                            <input type="text" name="institutional_code" class="form-control" placeholder="Enter Institution Code ">
+                                            <input type="text" name="institutional_code" class="form-control" placeholder="Enter Institution Code " required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="types_of_heis">Types of Hies:</label>
-                                            <select class="form-control" name="types_of_heis">
+                                            <select class="form-control" name="types_of_heis" required>
                                                 <option disabled selected> --Select-- </option>
                                                 <option value="SUC State University">SUC State University</option>
                                             </select>
                                         </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-row">
                                         <div class="col-md-3">
                                             <label for="program_level_code">Program Level Code:</label>
-                                            <select class="form-control" name="program_level_code">
+                                            <select class="form-control" name="program_level_code" required>
                                                 <option disabled selected> --Select-- </option>
-                                                <option value="Level 1">N/A</option>
+                                                <option value="">N/A</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <label for="contact_no">Telephone No/Cp No:</label>
                                             <input type="text" name="contact_no" class="form-control" placeholder="01234567890">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <div class="form-row">

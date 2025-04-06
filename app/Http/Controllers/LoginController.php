@@ -22,17 +22,22 @@ class LoginController extends Controller
             'password'=>'required'
         ]);
 
-        $validatedUser = auth()->guard('admin')->attempt([
+        auth()->guard('admin')->attempt([
             'email' => $request->email,
             'password' => $request->password,
         ]);
 
-        $validatedStudents = auth()->guard('web')->attempt([
+        auth()->guard('web')->attempt([
             'email' => $request->email,
             'password' => $request->password,
         ]);
 
-        $user = Auth::user()->role;
+        if(Auth::user()) {
+            $user = Auth::user()->role;
+        } else {
+            return redirect()->back()->with('error', 'Invalid Credentials');
+        }
+
 
         if($user == 'Administrator') {
             return redirect()->route('dash')->with('success', 'Login Successfully');

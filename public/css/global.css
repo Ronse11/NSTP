@@ -1,0 +1,229 @@
+/* CSS FOR CHOOSING NSTP */
+.card-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.card-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease-in-out;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    z-index: 2;
+}
+
+.hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)); 
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.card-container:hover .hover-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3));
+}
+
+.card-container:hover img {
+    transform: scale(1.05);
+}
+
+.overlay h1 {
+    font-size: 44px;
+    font-weight: 700;
+    text-align: center;
+    margin: auto;
+    z-index: 2;
+    transition: transform 0.4s ease-in-out;
+}
+
+.btn-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2;
+}
+
+.btn-select {
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    background-color: green;
+    border: 2px solid green;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn-select:hover {
+    background-color: transparent;
+    transform: scale(1.1);
+    color: darkgreen;
+}
+
+
+
+
+
+
+
+
+
+/* CSS FOR CONGRATULATING STUDENT */
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem;
+}
+
+.congrats-container {
+    background-color: #fff;
+    display: flex;
+    /* align-items: center; */
+    flex: 1;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #d7d4d47b;
+    overflow: hidden;
+}
+/* 
+.congrats-content {
+    text-align: center;
+} */
+
+.congrats-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.congrats-container p {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.banner-container {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #04401f;
+    padding: 1.3rem 3rem;
+    color: #fff;
+}
+
+.logo-container {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.cpsuLogo {
+    width: 60px;
+}
+
+.separator {
+    height: 100%;
+    border-left: 1px solid #fff;
+}
+
+.banner-text {
+    padding-top: 7px;
+}
+.banner-text h4 {
+    line-height: .9;
+}
+
+.cpsu-text {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 1px;
+}
+
+.cpsu-header-text {
+    font-size: 1.9rem;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.address-text {
+    font-size: .7rem;
+    font-weight: 500;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    letter-spacing: .4rem;
+    opacity: .9;
+}
+
+.banner-body {
+    padding: 1.3rem 3rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.banner-body span {
+    font-weight: 800;
+}
+.banner-body h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 1rem 0 2.5rem 0;
+}
+.banner-body h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: .9;
+}
+.banner-body p {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: .9;
+}
+
+.accept-btn {
+    padding: 1.3rem 3rem 0rem 3rem;
+}
+
+.accept-btn button {
+    padding: .5rem 2.5rem;
+    border-radius: 4px;
+    border: 1px solid #04401f;
+    background-color: #04401f;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* CSS OF MODAL FOR EDITING */
+/* .editStudent {
+    background-color: #fff;
+    margin: 0 1rem;
+    border-radius: 8px;
+} */

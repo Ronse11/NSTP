@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id')->nullable();
             $table->string('school_year')->nullable();
-            $table->string('school_id')->nullable();
+            $table->string('school_id')->nullable()->unique();
             $table->string('category')->nullable()->index();
             $table->string('course')->nullable();
             $table->string('lname')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('hei_name')->nullable();
             $table->string('institutional_code')->nullable();
-            $table->integer('types_of_heis')->nullable();
+            $table->string('types_of_heis')->nullable();
             $table->string('program_level_code')->nullable();
             $table->string('contact_no')->nullable();
             $table->string('status')->nullable()->index();

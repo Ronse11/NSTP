@@ -19,16 +19,20 @@
                             <input type="text" name="fname" class="form-control form-control-lg" id="fname" placeholder="First Name" style="height: 40px">
                         </div>
                         <div class="form-group">
+                            <label for="mname"></label>
+                            <input type="text" name="mname" class="form-control form-control-lg" id="lname" placeholder="Middle Name" style="height: 40px">
+                        </div>
+                        <div class="form-group">
                             <label for="lname"></label>
                             <input type="text" name="lname" class="form-control form-control-lg" id="lname" placeholder="Last Name" style="height: 40px">
                         </div>
                         <div class="form-group">
-                            <label for="email1"></label>
-                            <input type="email" name="email1" class="form-control form-control-lg" id="email1" placeholder="Your email address" style="height: 40px">
+                            <label for="email"></label>
+                            <input type="email" name="email" class="form-control form-control-lg" id="email" placeholder="Your email address" style="height: 40px">
                         </div>
                         <div class="form-group">
-                            <label for="password1"></label>
-                            <input type="password" name="password1" class="form-control form-control-lg" id="password1" placeholder="Your password" style="height: 40px">
+                            <label for="password"></label>
+                            <input type="password" name="password" class="form-control form-control-lg" id="password" placeholder="Your password" style="height: 40px">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-info btn-lg btn-block" style="height: 40px">Submit</button>

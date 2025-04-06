@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use App\Models\Students;
 use App\Models\Category;
+use App\Models\CommentTable;
 use Illuminate\Support\Facades\Auth;
 
 class FillupController extends Controller
@@ -25,7 +26,14 @@ class FillupController extends Controller
         ->where('status', 'accepted')
         ->first();
 
-        return view('fillup.listcategory_form', ['cat' => $cat, 'notif' => $notif]);
+        $pending = Students::where('student_id', $userId)
+        ->where('status', 'pending')
+        ->first();
+
+        $comment = CommentTable::where('student_id', $userId)
+        ->first();
+
+        return view('fillup.listcategory_form', ['cat' => $cat, 'notif' => $notif, 'pending' => $pending, 'comment' => $comment]);
     }
 
     public function fillupstudentRead($id)

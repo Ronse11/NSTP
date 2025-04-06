@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     
+
+
     <style>
         .container {
   padding: 2rem 0rem;
@@ -77,33 +79,33 @@
             <div class="main-header ">
                 <div class="header-bottom  header-sticky">
                     <div class="container-fluid">
-                        <div class="row align-items-center">
+                        <div class="row d-flex justify-content-between align-items-center mt-3">
                             <!-- Logo -->
-                            <div class="col-xl-2 col-lg-2">
+                            <div class=" d-flex">
                                 <div class="logo">
-                                    <a href="index.html"><img src="assets/img/logo/cpsulogo.png" width="35%" alt=""></a>
+                                    <a href="index.html"><img src="assets/img/logo/cpsulogo.png" width="70" alt=""></a>
+                                </div>
+                                <div class=" d-flex align-items-center ml-3">
+                                    <h1 class=" text-success display-4 mt-1">Central Phillipines State University</h1>
                                 </div>
                             </div>
-                            <div class="col-xl-10 col-lg-10">
-                                <div class="menu-wrapper d-flex align-items-center justify-content-end">
-                                    <!-- Main-menu -->
-                                    <div class="main-menu d-none d-lg-block">
-                                        <nav>
-                                            <ul id="navigation">                                                                                          
-                                                <li class="active"><a href="index.html"></a></li>
-                                                
-                                                <!-- Button -->
-                                                <li class="button-header">
-                                                    <button type="button" class="btn1 hero-btn" data-toggle="modal" data-target="#loginModal">
-                                                    Login
-                                                    </button>
-                                                    <button type="button" class="btn1 hero-btn" data-animation="fadeInLeft" data-delay="0.7s" data-toggle="modal" data-target="#registerModal">Register</button>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div> 
+
+
+                            <div class=" d-flex align-items-center">
+                                <ul id="navigation ">                                                                                          
+                                    <li class="active"><a href="index.html"></a></li>
+                                    
+                                    <!-- Button -->
+                                    <li class="button-header">
+                                        <button type="button" class="btn1 hero-btn" data-toggle="modal" data-target="#loginModal">
+                                        Login
+                                        </button>
+                                        <button type="button" class="btn1 hero-btn ml-3" data-animation="fadeInLeft" data-delay="0.7s" data-toggle="modal" data-target="#registerModal">Register</button>
+                                    </li>
+                                </ul>
+                            </div>
+
+
                             <!-- Mobile Menu -->
                             <div class="col-12">
                                 <div class="mobile_menu d-block d-lg-none"></div>
@@ -131,6 +133,16 @@
                                         </div>
                                     @endif
 
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="font-size: 10pt;">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
                                     @if(session('error'))
                                         <div class="alert alert-danger" style="font-size: 10pt;">
                                             <i class="fas fa-exclamatory-circle"></i> {{ session('error') }}
@@ -154,8 +166,10 @@
 
 @include('modals.register')
 @include('modals.modal_login')
+
 <!-- JS here -->
 <script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
+
 <!-- Jquery, Popper, Bootstrap -->
 <script src="{{ asset('assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
@@ -195,6 +209,8 @@
 <!-- Jquery Plugins, main Jquery -->	
 <script src="{{ asset('assets/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
+
 
 </body>
 </html>

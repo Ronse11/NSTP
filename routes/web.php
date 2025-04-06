@@ -43,6 +43,13 @@ Route::group(['middleware' => ['login_auth']], function(){
     Route::get('/students/list', [DashboardController::class,'studentcwtsShow'])->name('studentcwtsShow');
     Route::get('/students/list/LTS', [DashboardController::class,'studentLTSShow'])->name('studentLTSShow');
     Route::get('/students/list/rotc', [DashboardController::class,'studentrotcShow'])->name('studentrotcShow');
+    Route::get('/students/all_list', [DashboardController::class,'allStudents'])->name('allStudents');
+
+    Route::get('/students/list/edit/{id}', [DashboardController::class,'editStudent'])->name('editStudent');
+    Route::post('/students/list/edit/{id}', [DashboardController::class,'editChosenStudent'])->name('editChosenStudent');
+    Route::get('/students/list/delete/{id}', [DashboardController::class,'deleteStudent'])->name('deleteStudent');
+    Route::get('/students/comment/delete/{id}', [StudentsController::class,'readComment'])->name('readComment');
+
 
     Route::get('/students/category/select', [FillupController::class,'fillupstudentCategoryRead'])->name('fillupstudentCategoryRead');
     Route::get('/students/fillup/{id}', [FillupController::class,'fillupstudentRead'])->name('fillupstudentRead');
@@ -55,6 +62,9 @@ Route::group(['middleware' => ['login_auth']], function(){
     Route::get('/students/category/list/applied/lts', [DashboardController::class, 'appliedLts'])->name('appliedLts');
     Route::post('/students/category/list/applied/accept/{id}', [DashboardController::class, 'acceptedApplicant'])->name('acceptedApplicant');
     Route::post('/students/category/list/applied/decline/{id}', [DashboardController::class, 'declineApplicant'])->name('declineApplicant');
+
+    Route::get('/exports/students', [DashboardController::class, 'exportAllStudents'])->name('export.all.students');
+
 
     Route::get('/logout', [DashboardController::class,'logout'])->name('logout');
 });
