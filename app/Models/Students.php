@@ -34,6 +34,7 @@ class Students extends Authenticatable
         'types_of_heis',
         'program_level_code',
         'contact_no',
-        'status'
+        'status',
+        'active'
     ];
 }

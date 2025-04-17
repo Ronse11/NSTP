@@ -76,7 +76,8 @@ class StudentsController extends Controller
                     'types_of_heis' => $request->input('types_of_heis'),
                     'program_level_code' => $request->input('program_level_code'),
                     'contact_no' => $request->input('contact_no'),
-                    'status' => 'pending'
+                    'status' => 'pending',
+                    'active' => true
                 ]);
 
             } else {

@@ -53,7 +53,8 @@
                                             <th>Name</th>
                                             <th>Course</th>
                                             <th>Gender</th>
-                                            <th class="no-print">Print</th> <!-- Checkbox column (hidden in print) -->
+                                            <th>Status</th>
+                                            <th class="no-print">Print</th> 
                                             <th class="no-print">Action</th>
                                         </tr>
                                     </thead>
@@ -65,6 +66,14 @@
                                             <td class="align-middle">{{ $datastudrotc->lname }}, {{ $datastudrotc->fname }} {{ $datastudrotc->mname }}</td>
                                             <td class="align-middle">{{ $datastudrotc->course }}</td>
                                             <td class="align-middle">{{ $datastudrotc->gender }}</td>
+                                            <td class="no-print align-middle">
+                                                <button type="button" 
+                                                    class="btn {{ $datastudrotc->active ? 'btn-success' : 'btn-danger' }} toggle-status-btn"
+                                                    data-student-id="{{ $datastudrotc->student_id }}" 
+                                                    data-current-status="{{ $datastudrotc->active ? 1 : 0 }}">
+                                                    {{ $datastudrotc->active ? 'Active' : 'Inactive' }}
+                                                </button>
+                                            </td>
                                             <td class="no-print align-middle">
                                                 <input type="checkbox" class="print-checkbox">
                                             </td>
@@ -82,11 +91,19 @@
                                         </tr>
                                         @endforeach
                                         @foreach ($studrotcFemale as  $datastudrotc)
-                                        <tr class="align-middle" data-student-id="{{ $datastudrotc->student_id }}>
+                                        <tr class="align-middle" data-student-id="{{ $datastudrotc->student_id }}">
                                             <td class=" align-middle">{{ $no++ }}</td>
                                             <td class=" align-middle">{{ $datastudrotc->lname }}, {{ $datastudrotc->fname }} {{ $datastudrotc->mname }}</td>
                                             <td class=" align-middle">{{ $datastudrotc->course }}</td>
                                             <td class=" align-middle">{{ $datastudrotc->gender }}</td>
+                                            <td class="no-print align-middle">
+                                                <button type="button" 
+                                                    class="btn {{ $datastudrotc->active ? 'btn-success' : 'btn-danger' }} toggle-status-btn"
+                                                    data-student-id="{{ $datastudrotc->student_id }}" 
+                                                    data-current-status="{{ $datastudrotc->active ? 1 : 0 }}">
+                                                    {{ $datastudrotc->active ? 'Active' : 'Inactive' }}
+                                                </button>
+                                            </td>
                                             <td class="no-print align-middle">
                                                 <input type="checkbox" class="print-checkbox">
                                             </td>

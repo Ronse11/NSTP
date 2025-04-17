@@ -36,20 +36,33 @@ class LoginAuth
         //                       ->header('Expire','Sat 01 Jan 1990 00:00:00 GMT');
 
 
-        if (auth()->guard('admin')->check()) {
-            $userRole = auth()->guard('admin')->user()->role;
-    
-            if (in_array($userRole, [0, 1])) {
-                if ($request->is('users') || $request->is('users/*')) {
-                    return redirect()->route('dash')->with('error', 'You do not have permission to access this page');
+        if (Auth::check()) {
+            $user = Auth::user();
+            
+            // Role-based permissions
+            if ($user->role === 'Administrator') {
+                if ($request->is('students/*')) {
+                    return redirect()->route('dash')
+                        ->with('info', 'Redirected to admin dashboard');
+                }
+            } 
+            elseif ($user->role === 'Student') {
+                // Students cannot access admin pages
+                if ($request->is('admin/*')) {
+                    return redirect()->route('fillupstudentCategoryRead')
+                        ->with('error', 'You do not have permission to access this page');
                 }
             }
-        } elseif (auth()->guard('web')->check()) {
-            if ($request->is('students/list')) {
-                return redirect()->route('fillupstudentCategoryRead')->with('error', 'No permission to access this page');
+            else {
+                // Unknown role type - restrict access
+                return redirect()->route('getportal')
+                    ->with('error', 'Your account does not have a valid role');
             }
-        }else {
-            return redirect()->route('login')->with('error', 'You have to sign in first to access this page');
+        } 
+        else {
+            // Not authenticated
+            return redirect()->route('getLogin')
+                ->with('error', 'You must sign in to access this page');
         }
         
         $response = $next($request);

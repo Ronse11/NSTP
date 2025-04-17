@@ -161,7 +161,7 @@
                             
                                         <!-- Top Right: Total Number -->
                                         <div class="">
-                                            <h2 class="display-6 font-weight-bold">{{number_format($studall)}}</h2>
+                                            <h2 class="display-6 font-weight-bold">{{number_format($allCount)}}</h2>
     
                                         </div>
                                     </div>
@@ -169,11 +169,11 @@
                                     <div class="d-flex align-items-center pl-2 gap-4"  style="opacity: 0.7;">
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-male fa-2x mr-2"></i> <!-- Male Icon (2x size) -->
-                                            <h5 class="mb-0 fa-2x">{{ number_format($studcwts) }}</h5>
+                                            <h5 class="mb-0 fa-2x">{{ number_format($allMale) }}</h5>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-female fa-2x mr-2"></i> <!-- Female Icon (2x size) -->
-                                            <h5 class="mb-0 fa-2x">{{ number_format($studcwts) }}</h5>
+                                            <h5 class="mb-0 fa-2x">{{ number_format($allFemale) }}</h5>
                                         </div>
                                     </div>
                                 </div>

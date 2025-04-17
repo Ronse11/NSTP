@@ -54,8 +54,9 @@
                                             <th>Name</th>
                                             <th>Course</th>
                                             <th>Gender</th>
-                                            <th class="no-print">Print</th> <!-- Checkbox column (hidden in print) -->
-                                            <th class="no-print">Action</th> <!-- Action column (hidden in print) -->
+                                            <th>Status</th>
+                                            <th class="no-print">Print</th> 
+                                            <th class="no-print">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody >
@@ -66,6 +67,14 @@
                                             <td class="align-middle">{{ $datastudlts->lname }}, {{ $datastudlts->fname }} {{ $datastudlts->mname }}</td>
                                             <td class="align-middle">{{ $datastudlts->course }}</td>
                                             <td class="align-middle">{{ $datastudlts->gender }}</td>
+                                            <td class="no-print align-middle">
+                                                <button type="button" 
+                                                    class="btn {{ $datastudlts->active ? 'btn-success' : 'btn-danger' }} toggle-status-btn"
+                                                    data-student-id="{{ $datastudlts->student_id }}" 
+                                                    data-current-status="{{ $datastudlts->active ? 1 : 0 }}">
+                                                    {{ $datastudlts->active ? 'Active' : 'Inactive' }}
+                                                </button>
+                                            </td>
                                             <td class="no-print align-middle">
                                                 <input type="checkbox" class="print-checkbox">
                                             </td>
@@ -87,6 +96,14 @@
                                             <td class="align-middle">{{ $datastudlts->lname }}, {{ $datastudlts->fname }} {{ $datastudlts->mname }}</td>
                                             <td class="align-middle">{{ $datastudlts->course }}</td>
                                             <td class="align-middle">{{ $datastudlts->gender }}</td>
+                                            <td class="no-print align-middle">
+                                                <button type="button" 
+                                                    class="btn {{ $datastudlts->active ? 'btn-success' : 'btn-danger' }} toggle-status-btn"
+                                                    data-student-id="{{ $datastudlts->student_id }}" 
+                                                    data-current-status="{{ $datastudlts->active ? 1 : 0 }}">
+                                                    {{ $datastudlts->active ? 'Active' : 'Inactive' }}
+                                                </button>
+                                            </td>
                                             <td class="no-print align-middle">
                                                 <input type="checkbox" class="print-checkbox">
                                             </td>

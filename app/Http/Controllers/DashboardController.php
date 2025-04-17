@@ -32,8 +32,13 @@ class DashboardController extends Controller
         $totalFemaleLts = Students::where('category', '=', 'LTS')->where('status', 'accepted')->where('gender', 'Female')->count();
         $totalFemaleRotc = Students::where('category', '=', 'ROTC')->where('status', 'accepted')->where('gender', 'Female')->count();
 
+        $allMale = Students::where('status', 'accepted')->where('gender', 'Male')->count();
+        $allFemale = Students::where('status', 'accepted')->where('gender', 'Female')->count();
 
-        return view('home.dashboard', compact('studcwts', 'studlts', 'studrotc', 'studall', 'totalMale', 'totalFemale', 'totalMaleCwts','totalMaleLts','totalMaleRotc','totalFemaleCwts','totalFemaleLts','totalFemaleRotc',)); 
+        $allCount = Students::where('status', 'accepted')->count();
+
+
+        return view('home.dashboard', compact('studcwts', 'studlts', 'studrotc', 'studall', 'totalMale', 'totalFemale', 'totalMaleCwts','totalMaleLts','totalMaleRotc','totalFemaleCwts','totalFemaleLts','totalFemaleRotc', 'allMale', 'allFemale', 'allCount')); 
     }
 
     // SHOWING OF APPLIED STUDENTS STARTS HERE!
@@ -70,7 +75,7 @@ class DashboardController extends Controller
 
         $studcwtsFemale = Students::where('category', '=', 'CWTS')
         ->where('status', 'accepted')
-        ->where('status', 'Female')
+        ->where('gender', 'Female')
         ->get();
 
         $studCount = Students::where('category', '=', 'CWTS')
@@ -206,7 +211,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Edited!');
+        return redirect($request->input('redirect_to'));
 
     }
     // EDITING OF STUDENTS DATA ENDS HERE!
@@ -235,10 +240,37 @@ class DashboardController extends Controller
     }
     // EXPORTING OF STUDENT DATA ENDS HERE!
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect('/')->with('success', 'Logout Successfully');
+    }
+
+
+    // SAVING OF ACTIVE AND INACIVE BUTTON
+    public function toggleStatus(Request $request, $id)
+    {
+        try {
+            $currentStatus = $request->input('active');
+        
+            $student = Students::where('student_id', $id)->first();
+            
+            if (!$student) {
+                return response()->json(['success' => false, 'message' => 'Student not found'], 404);
+            }
+            
+            $newStatus = $currentStatus == 1 ? 0 : 1;
+            
+            $student->active = $newStatus;
+            $student->save();
+            
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
     
 }

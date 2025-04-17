@@ -29,6 +29,7 @@
     
             <div class="form-group">
                 <div class="form-row">
+                    <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
                     <div class="col-md-3">
                         <label for="school_year">School Year:</label>
                         <input type="text" name="school_year" class="form-control" value="{{$studentData->school_year}}">

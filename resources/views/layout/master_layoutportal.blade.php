@@ -167,6 +167,17 @@
 @include('modals.register')
 @include('modals.modal_login')
 
+<script>
+    const nameFields = ['fname', 'mname', 'lname'];
+
+    nameFields.forEach(id => {
+        const input = document.getElementById(id);
+        input.addEventListener('input', function () {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+    });
+</script>
+
 <!-- JS here -->
 <script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
 

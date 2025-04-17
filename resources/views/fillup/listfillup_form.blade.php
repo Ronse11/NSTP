@@ -87,19 +87,19 @@
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <label for="lname">Last Name:</label>
-                                            <input type="text" name="lname" class="form-control" placeholder="Enter Last name" oninput="this.value = this.value.toUpperCase()" required>
+                                            <input type="text" name="lname" class="form-control" placeholder="Enter Last name" oninput="filterNameInput(this)" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="fname">First Name:</label>
-                                            <input type="text" name="fname" class="form-control" placeholder="Enter First name" oninput="this.value = this.value.toUpperCase()" required>
+                                            <input type="text" name="fname" class="form-control" placeholder="Enter First name" oninput="filterNameInput(this)" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="mname">Middle Initial:</label>
-                                            <input type="text" name="mname" class="form-control" placeholder="Enter Middle Initial" oninput="this.value = this.value.toUpperCase()" required>
+                                            <input type="text" name="mname" class="form-control" placeholder="Enter Middle Initial" oninput="filterNameInput(this)" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ext">Extension Name:</label>
-                                            <input type="text" name="ext" class="form-control" placeholder="Enter Extension name" oninput="this.value = this.value.toUpperCase()">
+                                            <input type="text" name="ext" class="form-control" placeholder="Enter Extension name" oninput="filterNameInput(this)">
                                         </div>
                                     </div>
                                 </div>

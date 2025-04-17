@@ -40,7 +40,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('postLogin')}}" method="post">
+                <form action="{{ route('adminLogin')}}" method="post">
                     @csrf
 
                     <div class="input-group mb-3">

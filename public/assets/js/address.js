@@ -7,35 +7,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const cityInput = document.getElementById("city_name");
     const barangayInput = document.getElementById("barangay_name");
 
-    // Fetch provinces
-    fetch("https://psgc.gitlab.io/api/provinces.json")
+    fetch(`https://psgc.cloud/api/provinces`)
         .then(response => response.json())
-        .then(data => {
-            data.sort((a, b) => a.name.localeCompare(b.name)); 
-            data.forEach(province => {
+        .then(provinces => {
+            provinces.sort((a, b) => a.name.localeCompare(b.name));
+            
+            provinces.forEach(province => {
                 let option = document.createElement("option");
                 option.value = province.code;
                 option.setAttribute("data-name", province.name);
                 option.textContent = province.name;
                 provinceSelect.appendChild(option);
             });
+        })
+        .catch(error => {
+            console.error("Error fetching provinces:", error);
         });
 
-    // Handle province selection
     provinceSelect.addEventListener("change", function () {
-        let selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
-        let provinceCode = selectedOption.value;
-        let provinceName = selectedOption.getAttribute("data-name");
+        const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
+        const provinceCode = selectedOption.value;
+        const provinceName = selectedOption.getAttribute("data-name");
 
-        provinceInput.value = provinceName; // Save name
+        provinceInput.value = provinceName;
 
         citySelect.innerHTML = '<option value="" selected disabled>Select City/Municipality</option>';
         barangaySelect.innerHTML = '<option value="" selected disabled>Select Barangay</option>';
         citySelect.disabled = false;
         barangaySelect.disabled = true;
 
-        // Fetch cities
-        fetch(`https://psgc.gitlab.io/api/provinces/${provinceCode}/cities.json`)
+        fetch(`https://psgc.cloud/api/provinces/${provinceCode}/cities-municipalities`)
             .then(response => response.json())
             .then(data => {
                 data.sort((a, b) => a.name.localeCompare(b.name));
@@ -49,19 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // Handle city selection
     citySelect.addEventListener("change", function () {
-        let selectedOption = citySelect.options[citySelect.selectedIndex];
-        let cityCode = selectedOption.value;
-        let cityName = selectedOption.getAttribute("data-name");
+        const selectedOption = citySelect.options[citySelect.selectedIndex];
+        const cityCode = selectedOption.value;
+        const cityName = selectedOption.getAttribute("data-name");
 
-        cityInput.value = cityName; // Save name
+        cityInput.value = cityName;
 
         barangaySelect.innerHTML = '<option value="" selected disabled>Select Barangay</option>';
         barangaySelect.disabled = false;
 
-        // Fetch barangays
-        fetch(`https://psgc.gitlab.io/api/cities/${cityCode}/barangays.json`)
+        fetch(`https://psgc.cloud/api/cities-municipalities/${cityCode}/barangays`)
             .then(response => response.json())
             .then(data => {
                 data.sort((a, b) => a.name.localeCompare(b.name));
@@ -75,11 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // Handle barangay selection
     barangaySelect.addEventListener("change", function () {
-        let selectedOption = barangaySelect.options[barangaySelect.selectedIndex];
-        let barangayName = selectedOption.getAttribute("data-name");
+        const selectedOption = barangaySelect.options[barangaySelect.selectedIndex];
+        const barangayName = selectedOption.getAttribute("data-name");
 
-        barangayInput.value = barangayName; // Save name
+        barangayInput.value = barangayName;
     });
 });

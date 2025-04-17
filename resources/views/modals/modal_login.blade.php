@@ -11,7 +11,7 @@
                     <h1>Login</h1>
                 </div>
                 <div class="d-flex flex-column text-center">
-                    <form method="post" action="{{ route('postLogin') }}">
+                    <form method="post" action="{{ route('studentLogin') }}">
                         @csrf
                         <div class="form-group">
                             <input type="email" name="email" class="form-control form-control-lg" id="email1" placeholder="Your email address..." style="height: 40px">

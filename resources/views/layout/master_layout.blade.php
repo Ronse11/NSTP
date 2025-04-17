@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CPSU | NSTPs</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <script src="https://cdn.jsdelivr.net/npm/ph-locations@latest/dist/ph-locations.min.js"></script>
 
@@ -390,6 +391,48 @@ function printTable() {
 </script>
 
 
+<script>
+    function filterNameInput(input) {
+        input.value = input.value.toUpperCase().replace(/[^A-Z\s.,]/g, '');
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const toggleButtons = document.querySelectorAll('.toggle-status-btn');
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.studentId;
+            const currentStatus = parseInt(this.dataset.currentStatus);
+                fetch(`/admin/students/toggle-status/${studentId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        active: currentStatus
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.classList.toggle('btn-success');
+                        this.classList.toggle('btn-danger');
+                        this.textContent = currentStatus ? 'Inactive' : 'Active';
+                        this.dataset.currentStatus = currentStatus ? '0' : '1';
+                    } else {
+                        alert('Failed to update status');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+</script>
     
 
 </body>
