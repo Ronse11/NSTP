@@ -38,7 +38,7 @@
                                 <table class="printTableArea table table-hover" id="example1" data-categ="ALL" data-category="All Students">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th class="no-print">#</th>
                                             <th>Name</th>
                                             <th>Course</th>
                                             <th>Gender</th>
@@ -50,7 +50,7 @@
                                         @php $no=1; @endphp
                                         @foreach ($allStud as  $stud)
                                         <tr class="align-middle" data-student-id="{{ $stud->student_id }}">
-                                            <td class="align-middle">{{ $no++ }}</td>
+                                            <td class="align-middle no-print">{{ $no++ }}</td>
                                             <td class=" align-middle">{{ $stud->lname }}, {{ $stud->fname }} {{ $stud->mname }}</td>
                                             <td class=" align-middle">{{ $stud->course }}</td>
                                             <td class=" align-middle">{{ $stud->gender }}</td>

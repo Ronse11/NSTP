@@ -49,7 +49,7 @@
                                 <table class="printTableArea table table-hover" id="example1" data-categ="ROTC" data-category="Reserve Officers' Training Corps">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th class="no-print">#</th>
                                             <th>Name</th>
                                             <th>Course</th>
                                             <th>Gender</th>
@@ -62,7 +62,7 @@
                                         @php $no=1; @endphp
                                         @foreach ($studrotcMale as  $datastudrotc)
                                         <tr class="align-middle" data-student-id="{{ $datastudrotc->student_id }}">
-                                            <td class="align-middle">{{ $no++ }}</td>
+                                            <td class="align-middle no-print">{{ $no++ }}</td>
                                             <td class="align-middle">{{ $datastudrotc->lname }}, {{ $datastudrotc->fname }} {{ $datastudrotc->mname }}</td>
                                             <td class="align-middle">{{ $datastudrotc->course }}</td>
                                             <td class="align-middle">{{ $datastudrotc->gender }}</td>
@@ -92,7 +92,7 @@
                                         @endforeach
                                         @foreach ($studrotcFemale as  $datastudrotc)
                                         <tr class="align-middle" data-student-id="{{ $datastudrotc->student_id }}">
-                                            <td class=" align-middle">{{ $no++ }}</td>
+                                            <td class=" align-middle no-print">{{ $no++ }}</td>
                                             <td class=" align-middle">{{ $datastudrotc->lname }}, {{ $datastudrotc->fname }} {{ $datastudrotc->mname }}</td>
                                             <td class=" align-middle">{{ $datastudrotc->course }}</td>
                                             <td class=" align-middle">{{ $datastudrotc->gender }}</td>

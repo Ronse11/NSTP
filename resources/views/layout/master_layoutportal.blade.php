@@ -172,8 +172,31 @@
 
     nameFields.forEach(id => {
         const input = document.getElementById(id);
-        input.addEventListener('input', function () {
-            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        if (!input) return;
+        
+        const messageEl = document.createElement('div');
+        messageEl.className = 'invalid-feedback text-danger';
+        messageEl.style.display = 'none';
+        messageEl.textContent = 'Numbers and special characters are not allowed';
+        input.parentNode.appendChild(messageEl);
+        
+        let hideTimeout;
+        
+        input.addEventListener('input', function(e) {
+            const oldValue = this.value;
+            const newValue = oldValue.replace(/[^a-zA-Z\s]/g, '');
+            
+            if (oldValue !== newValue) {
+                this.value = newValue;
+                
+                messageEl.style.display = 'block';
+                
+                if (hideTimeout) clearTimeout(hideTimeout);
+                
+                hideTimeout = setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 1000);
+            }
         });
     });
 </script>

@@ -206,132 +206,136 @@
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> --}}
 
 <script>
-function printTable() {
-
-    const elementsToHide = document.querySelectorAll('.no-print');
-    const originalStyles = new Map();
-    elementsToHide.forEach(el => {
-        originalStyles.set(el, el.style.display);
-        el.style.display = 'none';
-    });
-
-    const table = document.querySelector(".printTableArea"); 
-    const category = table.getAttribute('data-category'); 
-    if (!table) {
-        alert("No table found!");
-        restoreOriginalState();
-        return;
-    }
-
-    const tableRows = table.querySelectorAll("tbody tr");
-    let filteredRows = [];
-    
-    tableRows.forEach(row => {
-        const checkbox = row.querySelector('.print-checkbox');
-        if (checkbox && checkbox.checked) {
-            let clonedRow = row.cloneNode(true);
-            let checkboxCell = clonedRow.querySelector('.no-print');
-            if (checkboxCell) checkboxCell.remove();
-            console.log(checkboxCell);
-
-            filteredRows.push(clonedRow.outerHTML);
-        }
-    });
-
-    if (filteredRows.length === 0) {
-        alert("No records selected for printing!");
-        restoreOriginalState();
-        return;
-    }
-
-    const customThead = `
-        <thead>
-            <tr>
-                <th style="text-align: left;">#</th>
-                <th style="text-align: left;">Name</th>
-                <th style="text-align: left;">Course</th>
-                <th style="text-align: left;">Gender</th>
-            </tr>
-        </thead>
-    `;
-
-    let paginatedRows = '';
-    filteredRows.forEach((row, index) => {
-        if (index % 23 === 0 && index !== 0) {
-            paginatedRows += `<tr class="page-break" style="height: 170px;"></tr>`;
-        }
-        paginatedRows += row;
-    });
-
-
-    const printContent = `
-    <style>
-        /* Ensure the header and footer remain in place */
-        .header, .footer {
-            position: fixed;
-            width: 100%;
-            text-align: center;
-            background: white;
-        }
-        .header {
-            top: 0;
-        }
-
-        .footer {
-            bottom: 0;
-        }
-
-        .content {
-            margin-top: 200px;
-        }
-
-        /* Ensure content starts correctly on each new page */
-        @media print {
-            .content {
-                page-break-before: always;
-            }
-
-            .page-break {
-                page-break-before: always;
-            }
-        }
-    </style>
-
-    <div class="header">
-        <img src="{{ asset('assets/img/printFormat/header.png') }}" style="width: 100%;" />
-        <h2 style="font-family: Arial, Helvetica, sans-serif;">${category}</h2>
-    </div>
-
-    <div class="footer">
-        <img src="{{ asset('assets/img/printFormat/footer.png') }}" style="width: 100%;" />
-    </div>
-
-    <div class="content">
-        <table cellspacing="0" cellpadding="5" width="100%">
-            ${customThead}
-            <tbody>${paginatedRows}</tbody>
-        </table>
-    </div>
-    `;
-
-    printJS({
-        printable: printContent,
-        type: 'raw-html',
-        documentTitle: 'Student List',
-    });
-
-    setTimeout(() => {
-        restoreOriginalState();
-    }, 500);
-
-    function restoreOriginalState() {
+    function printTable() {
+        const elementsToHide = document.querySelectorAll('.no-print');
+        const originalStyles = new Map();
         elementsToHide.forEach(el => {
-            el.style.display = originalStyles.get(el) || '';
+            originalStyles.set(el, el.style.display);
+            el.style.display = 'none';
         });
+
+        const table = document.querySelector(".printTableArea"); 
+        const category = table.getAttribute('data-category'); 
+        if (!table) {
+            alert("No table found!");
+            restoreOriginalState();
+            return;
+        }
+
+        const tableRows = table.querySelectorAll("tbody tr");
+        let filteredRows = [];
+        
+        tableRows.forEach(row => {
+            const checkbox = row.querySelector('.print-checkbox');
+            if (checkbox && checkbox.checked) {
+                let clonedRow = row.cloneNode(true);
+                let checkboxCell = clonedRow.querySelector('.no-print');
+                if (checkboxCell) checkboxCell.remove();
+                
+                // Store the DOM element instead of the HTML
+                filteredRows.push(clonedRow);
+            }
+        });
+
+        if (filteredRows.length === 0) {
+            alert("No records selected for printing!");
+            restoreOriginalState();
+            return;
+        }
+
+        const customThead = `
+            <thead>
+                <tr>
+                    <th style="text-align: left;">#</th>
+                    <th style="text-align: left;">Name</th>
+                    <th style="text-align: left;">Course</th>
+                    <th style="text-align: left;">Gender</th>
+                </tr>
+            </thead>
+        `;
+
+        let paginatedRows = '';
+        let rowNumber = 1; // Initialize row counter
+        
+        filteredRows.forEach((row, index) => {
+            if (index % 23 === 0 && index !== 0) {
+                paginatedRows += `<tr class="page-break" style="height: 170px;"></tr>`;
+            }
+            
+            // Create a new cell for row number without modifying existing cells
+            const newCell = document.createElement('td');
+            newCell.textContent = rowNumber++;
+            row.insertBefore(newCell, row.firstChild);
+            
+            paginatedRows += row.outerHTML;
+        });
+
+        const printContent = `
+        <style>
+            /* Ensure the header and footer remain in place */
+            .header, .footer {
+                position: fixed;
+                width: 100%;
+                text-align: center;
+                background: white;
+            }
+            .header {
+                top: 0;
+            }
+
+            .footer {
+                bottom: 0;
+            }
+
+            .content {
+                margin-top: 200px;
+            }
+
+            /* Ensure content starts correctly on each new page */
+            @media print {
+                .content {
+                    page-break-before: always;
+                }
+
+                .page-break {
+                    page-break-before: always;
+                }
+            }
+        </style>
+
+        <div class="header">
+            <img src="{{ asset('assets/img/printFormat/header.png') }}" style="width: 100%;" />
+            <h2 style="font-family: Arial, Helvetica, sans-serif;">${category}</h2>
+        </div>
+
+        <div class="footer">
+            <img src="{{ asset('assets/img/printFormat/footer.png') }}" style="width: 100%;" />
+        </div>
+
+        <div class="content">
+            <table cellspacing="0" cellpadding="5" width="100%">
+                ${customThead}
+                <tbody>${paginatedRows}</tbody>
+            </table>
+        </div>
+        `;
+
+        printJS({
+            printable: printContent,
+            type: 'raw-html',
+            documentTitle: 'Student List',
+        });
+
+        setTimeout(() => {
+            restoreOriginalState();
+        }, 500);
+
+        function restoreOriginalState() {
+            elementsToHide.forEach(el => {
+                el.style.display = originalStyles.get(el) || '';
+            });
+        }
     }
-}
-
-
 </script>
 
 <script>
@@ -393,7 +397,32 @@ function printTable() {
 
 <script>
     function filterNameInput(input) {
-        input.value = input.value.toUpperCase().replace(/[^A-Z\s.,]/g, '');
+        if (!input) return;
+        
+        const messageEl = document.createElement('div');
+        messageEl.className = 'invalid-feedback text-danger';
+        messageEl.style.display = 'none';
+        messageEl.textContent = 'Numbers and special characters are not allowed';
+        input.parentNode.appendChild(messageEl);
+        
+        let hideTimeout;
+        
+        input.addEventListener('input', function(e) {
+            const oldValue = this.value;
+            const newValue = oldValue.replace(/[^a-zA-Z.\s]/g, '');
+            
+            if (oldValue !== newValue) {
+                this.value = newValue;
+                
+                messageEl.style.display = 'block';
+                
+                if (hideTimeout) clearTimeout(hideTimeout);
+                
+                hideTimeout = setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 1000);
+            }
+        });
     }
 </script>
 
